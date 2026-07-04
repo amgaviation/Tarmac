@@ -231,11 +231,16 @@ function App() {
         <div className="relative flex h-full flex-col">
           <header className="z-20">
             <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-6">
-              <a href="#start" className="group" aria-label="Tarmac by AMG home">
+              <a href="#start" className="group flex items-center gap-8" aria-label="Tarmac by AMG home">
                 <img
-                  src="/brand/TarmAMGFinal.png"
+                  src="/brand/tarmamgfinal-crop.png"
                   alt="Tarmac"
-                  className="h-[180px] w-[180px] object-contain brightness-0 invert"
+                  className="h-[140px] w-[140px] object-contain brightness-0 invert"
+                />
+                <img
+                  src="/brand/tamgfinal-crop.png"
+                  alt="AMG"
+                  className="h-[140px] w-[140px] object-contain brightness-0 invert"
                 />
               </a>
 
