@@ -747,7 +747,11 @@ function App() {
       <footer className="border-t border-[#262626] bg-[#111111] px-6 py-8 md:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
           <a href="#start" aria-label="Tarmac by AMG home">
-            <BrandLogo compact />
+            <img
+              src="/brand/tarmacfinal.png"
+              alt="Tarmac"
+              className="h-[140px] w-[140px] object-contain brightness-0 invert"
+            />
           </a>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#8A8A8A]">
             {navItems.map((item) => (
