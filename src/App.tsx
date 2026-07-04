@@ -146,7 +146,7 @@ function BrandLogo({
     <img
       src="/brand/amg-logo.png"
       alt="Tarmac"
-      style={{ mixBlendMode: "multiply" }}
+      style={{ filter: "invert(1)" }}
       className={`${compact ? "h-[140px] w-[140px]" : "h-[180px] w-[180px]"} object-contain ${className}`}
     />
   );
