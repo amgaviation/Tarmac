@@ -295,15 +295,15 @@ function App() {
             id="main"
             className="relative z-10 flex flex-1 items-center justify-center px-6 pb-80 pt-20 text-center md:px-8 md:pb-44"
           >
-  <div className="-mt-28 max-w-5xl md:-mt-24">
-  <h1 className="mx-auto text-5xl font-black leading-none tracking-tight text-[#F5F5F5] md:text-7xl lg:text-8xl">
-    <span className="block text-[#8A8A8A]">Your Asset.</span>
-    <span className="-mt-2 block text-[#F5F5F5] md:-mt-3">Our Responsibility</span>
-  </h1>
-  <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#8A8A8A] md:mt-6 md:text-xl md:leading-8">
-    Tarmac by AMG is the one-stop aviation service that learns your needs, sources
-    the right partners, compares real options, and coordinates every handoff.
-  </p>
+            <div className="-mt-28 max-w-5xl md:-mt-24">
+              <h1 className="mx-auto text-5xl font-black leading-none tracking-tight text-[#F5F5F5] md:text-7xl lg:text-8xl">
+                <span className="block text-[#8A8A8A]">Your Asset.</span>
+                <span className="-mt-2 block text-[#F5F5F5] md:-mt-3">Our Responsibility</span>
+              </h1>
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#8A8A8A] md:mt-6 md:text-xl md:leading-8">
+                Tarmac by AMG is the one-stop aviation service that learns your needs, sources
+                the right partners, compares real options, and coordinates every handoff.
+              </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <a
                   href="#contact"
@@ -312,25 +312,25 @@ function App() {
                   Start a Request
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </a>
-    <a
-      href="#rates"
-      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#262626] bg-[#111111]/60 px-5 py-2.5 text-sm font-semibold text-[#F5F5F5] backdrop-blur transition-colors hover:border-[#3A3A3A] hover:bg-[#1A1A1A]"
-    >
-      Explore The Tarmac
-      <ChevronRight aria-hidden="true" className="h-4 w-4" />
-    </a>
+                <a
+                  href="#rates"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#262626] bg-[#111111]/60 px-5 py-2.5 text-sm font-semibold text-[#F5F5F5] backdrop-blur transition-colors hover:border-[#3A3A3A] hover:bg-[#1A1A1A]"
+                >
+                  Explore The Tarmac
+                  <ChevronRight aria-hidden="true" className="h-4 w-4" />
+                </a>
               </div>
             </div>
           </main>
 
           {/* Hero rail */}
           <div data-hero-rail className="absolute inset-x-0 bottom-0 z-10 border-t border-[#262626] bg-[#0A0A0A]/90 backdrop-blur">
-  <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-[#262626] px-6 text-left sm:grid-cols-3 sm:divide-x sm:divide-y-0 md:px-8">
-    {[
-      ["01", "Brief once", "We learn your immediate and recurring needs, then we strategically plan the best course of action."],
-      ["02", "Source smarter", "We hand select the best options before they reach your inbox."],
-      ["03", "Execution", "Tarmac delivers end to end support and assures your satisfaction."],
-    ].map(([number, title, copy]) => (
+            <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-[#262626] px-6 text-left sm:grid-cols-3 sm:divide-x sm:divide-y-0 md:px-8">
+              {[
+                ["01", "Brief once", "We learn your immediate and recurring needs, then we strategically plan the best course of action."],
+                ["02", "Source smarter", "We hand select the best options before they reach your inbox."],
+                ["03", "Execution", "Tarmac delivers end to end support and assures your satisfaction."],
+              ].map(([number, title, copy]) => (
                 <div key={title} className="py-4 sm:px-5 md:py-5">
                   <p className="font-mono text-xs font-bold text-[#9A92D1]">{number}</p>
                   <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">{title}</p>
