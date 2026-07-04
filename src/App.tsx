@@ -231,12 +231,22 @@ function App() {
         <div className="relative flex h-full flex-col">
           <header className="z-20">
             <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-6">
-              <a href="#start" className="group" aria-label="Tarmac by AMG home">
-                <img
-                  src="/brand/TarmAMGFinal.png"
-                  alt="Tarmac"
-                  className="h-[180px] w-[180px] object-contain brightness-0 invert"
-                />
+              <a href="#start" className="group flex items-center gap-6" aria-label="Tarmac by AMG home">
+                <div className="flex flex-col items-center">
+                  <img
+                    src="/brand/tarmacfinal.png"
+                    alt="Tarmac"
+                    className="h-16 w-16 object-contain brightness-0 invert"
+                  />
+                  <p className="mt-1 text-sm font-bold italic text-[#F5F5F5]">TARMAC</p>
+                </div>
+                <div className="flex flex-col items-start">
+                  <p className="text-xs font-semibold text-[#8A8A8A]">Powered By</p>
+                  <div className="flex items-center gap-1">
+                    <p className="text-lg font-black text-[#F5F5F5]">AMG</p>
+                    <ArrowRight aria-hidden="true" className="h-4 w-4 text-[#F5F5F5]" />
+                  </div>
+                </div>
               </a>
 
               <div className="hidden items-center gap-8 md:flex">
