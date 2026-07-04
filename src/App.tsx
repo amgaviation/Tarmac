@@ -610,7 +610,11 @@ function App() {
       <section id="contact" className="bg-[#0A0A0A] px-6 py-20 md:px-8 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <BrandLogo className="mb-8" />
+            <img
+              src="/brand/tarmacfinal.png"
+              alt="Tarmac"
+              className="mb-8 h-[180px] w-[180px] object-contain brightness-0 invert"
+            />
             <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">Start with the mission</p>
             <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-6xl">
               Bring one trip, owner need, or service request.
