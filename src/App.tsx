@@ -144,11 +144,9 @@ function BrandLogo({
 
   return (
     <img
-      src="/brand/tarmacfinal.png"
+      src="/brand/logo-short.png"
       alt="Tarmac"
-      className={`${compact ? "h-14 w-14" : "h-18 w-18"} object-contain ${
-        isDark ? "brightness-0" : "brightness-0 invert"
-      } ${className}`}
+      className={`${compact ? "h-14 w-14" : "h-18 w-18"} object-contain ${className}`}
     />
   );
 }
