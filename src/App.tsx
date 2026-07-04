@@ -233,12 +233,12 @@ function App() {
             <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-6">
               <a href="#start" className="group flex items-center gap-8" aria-label="Tarmac by AMG home">
                 <img
-                  src="/brand/tarmamgfinal-crop.png"
+                  src="/brand/TarmAMGFinal-crop.png"
                   alt="Tarmac"
                   className="h-[140px] w-[140px] object-contain brightness-0 invert"
                 />
                 <img
-                  src="/brand/tamgfinal-crop.png"
+                  src="/brand/TAMGFinal-crop.png"
                   alt="AMG"
                   className="h-[140px] w-[140px] object-contain brightness-0 invert"
                 />
