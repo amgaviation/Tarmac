@@ -232,7 +232,11 @@ function App() {
           <header className="z-20">
             <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-6">
               <a href="#start" className="group" aria-label="Tarmac by AMG home">
-                <BrandLogo />
+                <img
+                  src="/brand/tarmacfinal.png"
+                  alt="Tarmac"
+                  className="h-[180px] w-[180px] object-contain brightness-0 invert"
+                />
               </a>
 
               <div className="hidden items-center gap-8 md:flex">
