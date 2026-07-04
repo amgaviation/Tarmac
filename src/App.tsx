@@ -298,7 +298,7 @@ function App() {
             <div className="-mt-28 max-w-5xl md:-mt-24">
               <h1 className="mx-auto text-5xl font-black leading-none tracking-tight text-[#F5F5F5] md:text-7xl lg:text-8xl">
                 <span className="block text-[#8A8A8A]">Your Asset.</span>
-                <span className="-mt-2 block text-[#F5F5F5] md:-mt-3">Our Responsibility</span>
+                <span className="-mt-2 block text-[#F5F5F5] md:-mt-3">Our Responsibility.</span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#8A8A8A] md:mt-6 md:text-xl md:leading-8">
                 Tarmac by AMG is the one-stop aviation service that learns your needs, sources
