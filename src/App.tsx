@@ -144,9 +144,9 @@ function BrandLogo({
 
   return (
     <img
-      src="/brand/logo-short.png"
+      src="/brand/amg-logo.png"
       alt="Tarmac"
-      className={`${compact ? "h-14 w-14" : "h-18 w-18"} object-contain ${className}`}
+      className={`${compact ? "h-14 w-14" : "h-18 w-18"} object-contain invert ${className}`}
     />
   );
 }
