@@ -144,11 +144,10 @@ function BrandLogo({
 
   return (
     <img
-      src="/brand/tarmacfinal.png"
+      src="/brand/amg-logo.png"
       alt="Tarmac"
-      className={`${compact ? "h-14 w-14" : "h-18 w-18"} object-contain ${
-        isDark ? "brightness-0" : "brightness-0 invert"
-      } ${className}`}
+      style={{ filter: "invert(1)", mixBlendMode: "screen" }}
+      className={`${compact ? "h-[140px] w-[140px]" : "h-[180px] w-[180px]"} object-contain ${className}`}
     />
   );
 }
@@ -232,8 +231,17 @@ function App() {
         <div className="relative flex h-full flex-col">
           <header className="z-20">
             <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-6">
-              <a href="#start" className="group" aria-label="Tarmac by AMG home">
-                <BrandLogo />
+              <a href="#start" className="group flex items-center gap-8" aria-label="Tarmac by AMG home">
+                <img
+                  src="/brand/TarmAMGFinal-crop.png"
+                  alt="Tarmac"
+                  className="h-[140px] w-[140px] object-contain brightness-0 invert"
+                />
+                <img
+                  src="/brand/TAMGFinal-crop.png"
+                  alt="AMG"
+                  className="h-[140px] w-[140px] object-contain brightness-0 invert"
+                />
               </a>
 
               <div className="hidden items-center gap-8 md:flex">
@@ -607,7 +615,11 @@ function App() {
       <section id="contact" className="bg-[#0A0A0A] px-6 py-20 md:px-8 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
-            <BrandLogo className="mb-8" />
+            <img
+              src="/brand/tarmacfinal.png"
+              alt="Tarmac"
+              className="mb-8 h-[180px] w-[180px] object-contain brightness-0 invert"
+            />
             <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">Start with the mission</p>
             <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-6xl">
               Bring one trip, owner need, or service request.
@@ -740,7 +752,11 @@ function App() {
       <footer className="border-t border-[#262626] bg-[#111111] px-6 py-8 md:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
           <a href="#start" aria-label="Tarmac by AMG home">
-            <BrandLogo compact />
+            <img
+              src="/brand/tarmacfinal.png"
+              alt="Tarmac"
+              className="h-[140px] w-[140px] object-contain brightness-0 invert"
+            />
           </a>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#8A8A8A]">
             {navItems.map((item) => (
