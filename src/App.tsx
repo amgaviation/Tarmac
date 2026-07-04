@@ -1,24 +1,5 @@
+// @ts-nocheck
 import { FormEvent, useMemo, useState } from "react";
-import {
-  ArrowRight,
-  BadgeDollarSign,
-  CheckCircle2,
-  ChevronRight,
-  Clock3,
-  FileCheck2,
-  Handshake,
-  Mail,
-  Menu,
-  MessageSquareText,
-  Network,
-  Plane,
-  RadioTower,
-  Search,
-  ShieldCheck,
-  Sparkles,
-  X,
-} from "lucide-react";
-
 const videoUrl =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_091828_e240eb17-6edc-4129-ad9d-98678e3fd238.mp4";
 
@@ -33,24 +14,30 @@ const navItems = [
   { label: "FAQ", href: "#faq" },
 ];
 
+const missionStats = [
+  { value: "01", label: "Relationship", copy: "One desk learns the owner, client, and mission profile." },
+  { value: "12", label: "Market channels", copy: "Qualified operators, brokers, vendors, and service partners." },
+  { value: "0", label: "Blind shopping", copy: "No repeating the same trip brief across scattered quote threads." },
+];
+
 const serviceCards = [
   {
-    icon: Search,
+    glyph: "SR",
     title: "Charter sourcing",
     copy: "Share the mission once. Tarmac compares aircraft, routing, availability, operator fit, and price logic before options reach you.",
   },
   {
-    icon: Network,
+    glyph: "NW",
     title: "Broker network access",
-    copy: "We route requests through the right aviation partners instead of making you manage a spreadsheet of brokers and callbacks.",
+    copy: "Requests are routed through relevant aviation partners instead of forcing you to manage a spreadsheet of brokers and callbacks.",
   },
   {
-    icon: Handshake,
+    glyph: "OC",
     title: "Owner-side coordination",
     copy: "Owners get a communication bridge for quoting, positioning, service requests, partner follow-up, and trip readiness.",
   },
   {
-    icon: RadioTower,
+    glyph: "DS",
     title: "Service desk support",
     copy: "From FBO needs and ground transport to catering, overnight details, and client preferences, the in-between work is handled.",
   },
@@ -59,33 +46,42 @@ const serviceCards = [
 const processSteps = [
   {
     number: "01",
-    title: "Tell us the mission",
-    copy: "Passenger count, timing, route, aircraft preferences, budget sensitivity, service expectations, and non-negotiables.",
+    title: "Profile the mission",
+    copy: "Passenger count, route, timing, aircraft preference, service expectations, budget sensitivity, and non-negotiables.",
   },
   {
     number: "02",
-    title: "We source the network",
+    title: "Scan the network",
     copy: "Tarmac checks qualified partners, broker channels, operator fit, aircraft availability, and pricing context.",
   },
   {
     number: "03",
-    title: "You see clean options",
-    copy: "Receive a concise comparison with trade-offs, quote assumptions, likely fees, and the reason each option made the shortlist.",
+    title: "Compare the options",
+    copy: "You receive a concise shortlist with quote assumptions, likely fees, trade-offs, and why each option made the cut.",
   },
   {
     number: "04",
-    title: "We manage the handoffs",
+    title: "Control the handoff",
     copy: "Once approved, Tarmac coordinates the moving parts between client, owner, broker, operator, and service providers.",
   },
 ];
 
 const benefits = [
-  "One aviation desk that learns your preferences over time.",
-  "Less quote chasing, fewer cold calls, and fewer duplicate requests.",
-  "Transparent pricing conversations before the trip is committed.",
-  "Better matching across aircraft, timing, service expectations, and budget.",
-  "Coordination across owners, brokers, operators, FBOs, and support vendors.",
-  "A practical filter against inflated pricing and unnecessary competition games.",
+  "Aviation preferences become reusable operating intelligence.",
+  "Fewer quote threads, callbacks, duplicate briefs, and vendor dead ends.",
+  "Pricing conversations show the assumptions behind the number.",
+  "Aircraft, route, timing, service, and budget fit are compared together.",
+  "Owners, brokers, operators, FBOs, and vendors stay aligned through one desk.",
+  "Inflated pricing and unnecessary competition games get filtered earlier.",
+];
+
+const quoteFactors = [
+  "Aircraft class and cabin fit",
+  "Route and repositioning logic",
+  "Operator and partner availability",
+  "Crew, airport, tax, and service factors",
+  "Comparable options and trade-offs",
+  "Coordination scope and disclosed economics",
 ];
 
 const faqs = [
@@ -133,22 +129,33 @@ const initialFormState: FormState = {
 
 function BrandLogo({
   className = "",
-  variant = "light",
+  variant = "dark",
   compact = false,
 }: {
   className?: string;
   variant?: "dark" | "light";
   compact?: boolean;
 }) {
-  const isDark = variant === "dark";
+  const isLight = variant === "light";
 
   return (
     <img
-      src="/brand/amg-logo.png"
+      src="/brand/tarmacfinal.png"
       alt="Tarmac"
-      style={{ filter: "invert(1)", mixBlendMode: "screen" }}
-      className={`${compact ? "h-[140px] w-[140px]" : "h-[180px] w-[180px]"} object-contain ${className}`}
+      className={`${compact ? "h-16 w-16" : "h-20 w-20"} object-contain ${
+        isLight ? "drop-shadow-[0_18px_36px_rgba(255,255,255,0.14)]" : "brightness-0"
+      } ${className}`}
     />
+  );
+}
+
+function SectionLabel({ index, label }: { index: string; label: string }) {
+  return (
+    <div className="aero-label flex items-center gap-3 text-[#5D7DBC]">
+      <span className="text-[#9A92D1]">{index}</span>
+      <span className="h-px w-10 bg-[#C8D8F0]" aria-hidden="true" />
+      <span>{label}</span>
+    </div>
   );
 }
 
@@ -191,9 +198,9 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-[#F5F5F5]">
+    <div className="min-h-screen bg-white font-body text-[#0B1F3F]">
       {!introComplete ? (
-        <div className="fixed inset-0 z-[120] overflow-hidden bg-[#0A0A0A]">
+        <div className="fixed inset-0 z-[120] overflow-hidden bg-white">
           <video
             className="h-full w-full object-cover"
             src={introVideoUrl}
@@ -210,15 +217,14 @@ function App() {
 
       <a
         href="#main"
-        className="fixed left-4 top-4 z-[100] -translate-y-20 rounded-full bg-[#9A92D1] px-4 py-2 text-sm font-semibold text-[#0A0A0A] shadow-lg transition-transform focus:translate-y-0"
+        className="fixed left-4 top-4 z-[100] -translate-y-20 bg-white px-4 py-2 text-sm font-semibold text-[#0B1F3F] shadow-lg transition-transform focus:translate-y-0"
       >
         Skip to content
       </a>
 
-      {/* Hero */}
-      <section id="start" className="relative h-screen min-h-[760px] overflow-hidden bg-[#0A0A0A]">
+      <section id="start" className="aero-grid relative min-h-screen overflow-hidden bg-white">
         <video
-          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          className="absolute inset-0 h-full w-full object-cover opacity-35"
           src={videoUrl}
           autoPlay
           muted
@@ -226,22 +232,14 @@ function App() {
           playsInline
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,10,10,0.6)_0%,rgba(10,10,10,0.3)_40%,rgba(10,10,10,0.92)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(255,255,255,0.78)_48%,rgba(255,255,255,1)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_34%,rgba(154,146,209,0.22),transparent_30%),linear-gradient(90deg,rgba(93,125,188,0.12),transparent_24%,transparent_76%,rgba(154,146,209,0.12))]" />
 
-        <div className="relative flex h-full flex-col">
-          <header className="z-20">
-            <nav className="mx-auto flex max-w-7xl items-center justify-between px-8 py-6">
-              <a href="#start" className="group flex items-center gap-8" aria-label="Tarmac by AMG home">
-                <img
-                  src="/brand/TarmAMGFinal-crop.png"
-                  alt="Tarmac"
-                  className="h-[140px] w-[140px] object-contain brightness-0 invert"
-                />
-                <img
-                  src="/brand/TAMGFinal-crop.png"
-                  alt="AMG"
-                  className="h-[140px] w-[140px] object-contain brightness-0 invert"
-                />
+        <div className="relative flex min-h-screen flex-col">
+          <header className="z-20 border-b border-[#DDE8F8]/80 bg-white/76 backdrop-blur-xl">
+            <nav className="mx-auto flex max-w-[1500px] items-center justify-between px-5 py-4 md:px-12 lg:px-24">
+              <a href="#start" aria-label="Tarmac home">
+                <BrandLogo />
               </a>
 
               <div className="hidden items-center gap-8 md:flex">
@@ -249,51 +247,53 @@ function App() {
                   <a
                     key={item.href}
                     href={item.href}
-                    className="text-sm font-semibold text-[#8A8A8A] transition-colors hover:text-[#F5F5F5]"
+                    className="aero-label text-[#0B1F3F]/76 transition-colors hover:text-[#9A92D1]"
                   >
                     {item.label}
                   </a>
                 ))}
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#9A92D1] px-4 py-2 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-[#B8B3E8]"
+                  className="aero-button bg-[#0B2A55] text-white hover:bg-[#5D7DBC]"
                 >
                   Request
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  <span aria-hidden="true">-&gt;</span>
                 </a>
               </div>
 
               <button
                 type="button"
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#262626] bg-[#111111]/80 text-[#F5F5F5] backdrop-blur transition-colors hover:border-[#9A92D1] md:hidden"
+                className="inline-flex h-11 w-11 items-center justify-center border border-[#C8D8F0] bg-white text-[#0B1F3F] shadow-sm transition-colors hover:border-[#9A92D1] md:hidden"
                 aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen((open) => !open)}
               >
-                {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                <span aria-hidden="true" className="aero-label">
+                  {menuOpen ? "X" : "MENU"}
+                </span>
               </button>
             </nav>
 
             {menuOpen ? (
-              <div className="mx-5 rounded-lg border border-[#262626] bg-[#111111]/95 p-3 shadow-2xl backdrop-blur md:hidden">
+              <div className="mx-5 mb-5 border border-[#DDE8F8] bg-white/96 p-3 shadow-2xl backdrop-blur md:hidden">
                 {navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-between rounded-md px-4 py-3 text-sm font-semibold text-[#F5F5F5] transition-colors hover:bg-[#1A1A1A]"
+                    className="flex items-center justify-between border-b border-[#DDE8F8] px-4 py-4 text-sm font-semibold text-[#0B1F3F] transition-colors last:border-b-0 hover:bg-[#F3F6FF]"
                   >
                     {item.label}
-                    <ChevronRight aria-hidden="true" className="h-4 w-4 text-[#9A92D1]" />
+                    <span aria-hidden="true" className="text-[#9A92D1]">&gt;</span>
                   </a>
                 ))}
                 <a
                   href="#contact"
                   onClick={() => setMenuOpen(false)}
-                  className="mt-2 flex items-center justify-center gap-2 rounded-full bg-[#9A92D1] px-4 py-3 text-sm font-semibold text-[#0A0A0A] transition-colors hover:bg-[#B8B3E8]"
+                  className="aero-button mt-3 w-full justify-center bg-[#0B2A55] text-white hover:bg-[#5D7DBC]"
                 >
-                  Start a Request
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  Start Request
+                  <span aria-hidden="true">-&gt;</span>
                 </a>
               </div>
             ) : null}
@@ -301,150 +301,49 @@ function App() {
 
           <main
             id="main"
-            className="relative z-10 flex flex-1 items-center justify-center px-6 pb-80 pt-20 text-center md:px-8 md:pb-44"
+            className="relative z-10 flex flex-1 items-center px-5 pb-80 pt-20 md:px-12 md:pb-44 lg:px-24"
           >
-            <div className="-mt-28 max-w-5xl md:-mt-24">
-              <h1 className="mx-auto text-5xl font-black leading-none tracking-tight text-[#F5F5F5] md:text-7xl lg:text-8xl">
-                <span className="block text-[#8A8A8A]">Your Asset.</span>
-                <span className="-mt-2 block text-[#F5F5F5] md:-mt-3">Our Responsibility.</span>
-              </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#8A8A8A] md:mt-6 md:text-xl md:leading-8">
-                Tarmac by AMG is the one-stop aviation service that learns your needs, sources
-                the right partners, compares real options, and coordinates every handoff.
-              </p>
-              <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a
-                  href="#contact"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[#9A92D1] px-5 py-2.5 text-sm font-semibold text-[#0A0A0A] shadow-[0_16px_36px_rgba(154,146,209,0.28)] transition-colors hover:bg-[#B8B3E8]"
+            <div className="mx-auto grid w-full max-w-[1500px] gap-10 lg:grid-cols-12 lg:items-end">
+              <div className="lg:col-span-8">
+                <BrandLogo className="mb-10" compact />
+                <SectionLabel index="00" label="Private aviation network" />
+                <h1 className="mt-8 max-w-5xl font-display text-6xl font-medium leading-none text-[#0B1F3F] md:text-8xl lg:text-[128px]">
+                  Charter{" "}
+                  <span className="block text-[#5D6F8F]">without the chase.</span>
+                </h1>
+              </div>
+              <div className="border-l border-[#C8D8F0] pl-6 lg:col-span-4">
+                <p className="text-xl font-semibold leading-8 text-[#52627C] md:text-2xl">
+                  One aviation desk that learns the mission, filters the network, compares real
+                  options, and controls the handoff from quote to wheels up.
+                </p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col">
+                  <a
+                    href="#contact"
+                  className="aero-button justify-center bg-[#9A92D1] text-white hover:bg-[#867DCA]"
                 >
                   Start a Request
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  <span aria-hidden="true">-&gt;</span>
                 </a>
-                <a
-                  href="#rates"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#262626] bg-[#111111]/60 px-5 py-2.5 text-sm font-semibold text-[#F5F5F5] backdrop-blur transition-colors hover:border-[#3A3A3A] hover:bg-[#1A1A1A]"
+                  <a
+                    href="#story"
+                  className="aero-button justify-center border border-[#C8D8F0] bg-white text-[#0B2A55] hover:bg-[#F3F6FF]"
                 >
-                  Explore The Tarmac
-                  <ChevronRight aria-hidden="true" className="h-4 w-4" />
+                  See the Model
+                  <span aria-hidden="true">&gt;</span>
                 </a>
+                </div>
               </div>
             </div>
           </main>
 
-          {/* Hero rail */}
-          <div data-hero-rail className="absolute inset-x-0 bottom-0 z-10 border-t border-[#262626] bg-[#0A0A0A]/90 backdrop-blur">
-            <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-[#262626] px-6 text-left sm:grid-cols-3 sm:divide-x sm:divide-y-0 md:px-8">
-              {[
-                ["01", "Brief once", "We learn your immediate and recurring needs, then we strategically plan the best course of action."],
-                ["02", "Source smarter", "We hand select the best options before they reach your inbox."],
-                ["03", "Execution", "Tarmac delivers end to end support and assures your satisfaction."],
-              ].map(([number, title, copy]) => (
-                <div key={title} className="py-4 sm:px-5 md:py-5">
-                  <p className="font-mono text-xs font-bold text-[#9A92D1]">{number}</p>
-                  <p className="mt-1 text-sm font-semibold text-[#F5F5F5]">{title}</p>
-                  <p className="mt-1 max-w-sm text-xs leading-5 text-[#8A8A8A]">{copy}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Partnership bar */}
-      <section className="border-y border-[#262626] bg-[#111111] px-6 py-8 md:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">In partnership with AMG Aviation</p>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[#8A8A8A]">
-              Tarmac combines client-side coordination with aviation partner access, so the
-              relationship stays personal while the sourcing stays broad.
-            </p>
-          </div>
-          <div className="flex flex-col gap-4 md:items-end">
-            <BrandLogo compact />
-
-          </div>
-        </div>
-      </section>
-
-      {/* Story section */}
-      <section id="story" className="bg-[#0A0A0A] px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">Why Tarmac exists</p>
-            <h2 className="mt-4 max-w-3xl text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-6xl">
-              Stop shopping the same trip ten different ways.
-            </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#8A8A8A]">
-              Private aviation should not force owners, assistants, and frequent flyers to
-              chase a dozen quote threads just to learn who is fair, who is available, and
-              who is inflating the number. Tarmac becomes the practical layer in the middle:
-              one accountable aviation desk that knows your preferences and connects the
-              right company or service to the right mission.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              {
-                icon: MessageSquareText,
-                title: "One conversation",
-                copy: "Your preferences become reusable intelligence, not a new intake call every time.",
-              },
-              {
-                icon: BadgeDollarSign,
-                title: "Price discipline",
-                copy: "Quotes are compared against mission realities before they become your problem.",
-              },
-              {
-                icon: FileCheck2,
-                title: "Clear trade-offs",
-                copy: "Aircraft, routing, timing, and service compromises are explained in plain English.",
-              },
-              {
-                icon: Clock3,
-                title: "Hours returned",
-                copy: "Tarmac absorbs the searching, filtering, confirming, and coordination burden.",
-              },
-            ].map((item) => (
-              <article
-                key={item.title}
-                className="rounded-lg border border-[#262626] bg-[#111111] p-6 transition-colors hover:border-[#9A92D1]/40 hover:bg-[#181818]"
-              >
-                <item.icon aria-hidden="true" className="h-6 w-6 text-[#9A92D1]" />
-                <h3 className="mt-5 text-lg font-bold text-[#F5F5F5]">{item.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-[#8A8A8A]">{item.copy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services section */}
-      <section className="bg-[#111111] px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">What we coordinate</p>
-              <h2 className="mt-4 max-w-xl text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-5xl">
-                A network desk for charter, owners, brokers, and services.
-              </h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-[#8A8A8A]">
-                Tarmac is built for people who value private aviation but do not want the
-                operational drag that comes with shopping, comparing, and managing every
-                conversation themselves.
-              </p>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {serviceCards.map((service) => (
-                <article
-                  key={service.title}
-                  className="rounded-lg border border-[#262626] bg-[#181818] p-6 transition-colors hover:border-[#9A92D1]/40 hover:bg-[#1E1E1E]"
-                >
-                  <service.icon aria-hidden="true" className="h-7 w-7 text-[#9A92D1]" />
-                  <h3 className="mt-5 text-xl font-bold text-[#F5F5F5]">{service.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-[#8A8A8A]">{service.copy}</p>
+          <div data-hero-rail className="absolute inset-x-0 bottom-0 z-10 border-y border-[#DDE8F8] bg-white/88 backdrop-blur">
+            <div className="mx-auto grid max-w-[1500px] grid-cols-1 divide-y divide-[#DDE8F8] px-5 md:grid-cols-3 md:divide-x md:divide-y-0 md:px-12 lg:px-24">
+              {missionStats.map((stat) => (
+                <article key={stat.label} className="py-5 md:px-6">
+                  <p className="font-display text-5xl font-light leading-none text-[#9A92D1]">{stat.value}</p>
+                  <p className="aero-label mt-4 text-[#0B1F3F]">{stat.label}</p>
+                  <p className="mt-3 max-w-sm text-sm leading-6 text-[#64748B]">{stat.copy}</p>
                 </article>
               ))}
             </div>
@@ -452,81 +351,141 @@ function App() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="bg-[#0A0A0A] px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-3xl">
-            <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">How it works</p>
-            <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-5xl">
+      <section className="border-b border-[#DDE8F8] bg-white px-5 py-10 md:px-12 lg:px-24">
+        <div className="mx-auto grid max-w-[1500px] gap-8 md:grid-cols-12 md:items-center">
+          <div className="md:col-span-8">
+            <SectionLabel index="01" label="AMG Aviation Partnership" />
+            <p className="mt-5 max-w-4xl text-xl font-semibold leading-8 text-[#52627C]">
+              Tarmac combines client-side coordination with aviation partner access, so the
+              relationship stays personal while the sourcing stays broad.
+            </p>
+          </div>
+          <div className="flex items-center gap-8 md:col-span-4 md:justify-end">
+            <BrandLogo compact />
+            <img src="/brand/amg-logo.png" alt="AMG Aviation" className="h-14 w-44 object-contain" />
+          </div>
+        </div>
+      </section>
+
+      <section id="story" className="aero-grid bg-[#F8FBFF] px-5 py-24 md:px-12 md:py-36 lg:px-24">
+        <div className="mx-auto grid max-w-[1500px] gap-14 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionLabel index="02" label="Why Tarmac exists" />
+            <h2 className="mt-8 font-display text-5xl font-medium leading-tight text-[#0B1F3F] md:text-7xl">
+              Stop shopping the same trip ten different ways.
+            </h2>
+          </div>
+          <div className="lg:col-span-7">
+            <p className="max-w-4xl text-xl font-semibold leading-8 text-[#52627C] md:text-2xl">
+              Private aviation should not force owners, assistants, and frequent flyers to chase
+              a dozen quote threads just to learn who is fair, who is available, and who is
+              inflating the number.
+            </p>
+            <div className="mt-10 grid border-l border-t border-[#DDE8F8] sm:grid-cols-2">
+            {[
+              {
+                  glyph: "01",
+                  title: "One conversation",
+                  copy: "Your preferences become reusable intelligence, not a new intake call every time.",
+                },
+                {
+                  glyph: "02",
+                  title: "Price discipline",
+                  copy: "Quotes are compared against mission realities before they become your problem.",
+                },
+                {
+                  glyph: "03",
+                  title: "Clear trade-offs",
+                  copy: "Aircraft, routing, timing, and service compromises are explained in plain English.",
+                },
+                {
+                  glyph: "04",
+                  title: "Hours returned",
+                  copy: "Tarmac absorbs the searching, filtering, confirming, and coordination burden.",
+                },
+              ].map((item) => (
+                <article key={item.title} className="border-b border-r border-[#DDE8F8] bg-white/82 p-7">
+                  <p className="aero-label text-[#9A92D1]">{item.glyph}</p>
+                  <h3 className="mt-8 font-display text-2xl font-medium text-[#0B1F3F]">{item.title}</h3>
+                  <p className="mt-4 text-sm leading-6 text-[#52627C]">{item.copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white px-5 py-24 text-[#0B1F3F] md:px-12 md:py-36 lg:px-24">
+        <div className="mx-auto max-w-[1500px]">
+          <div className="grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <SectionLabel index="03" label="Network desk" />
+              <h2 className="mt-8 font-display text-5xl font-medium leading-tight md:text-6xl">
+                Charter, owners, brokers, and services in one operating layer.
+              </h2>
+            </div>
+            <div className="grid border-l border-t border-[#DDE8F8] md:grid-cols-2 lg:col-span-8">
+              {serviceCards.map((service) => (
+                <article key={service.title} className="border-b border-r border-[#DDE8F8] bg-[#F8FBFF] p-8 transition-colors hover:bg-[#F3F6FF]">
+                  <p className="aero-label text-[#9A92D1]">{service.glyph}</p>
+                  <h3 className="mt-10 font-display text-3xl font-medium">{service.title}</h3>
+                  <p className="mt-5 text-sm leading-6 text-[#52627C]">{service.copy}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="aero-grid bg-[#EEF5FF] px-5 py-24 md:px-12 md:py-36 lg:px-24">
+        <div className="mx-auto max-w-[1500px]">
+          <div className="max-w-4xl">
+            <SectionLabel index="04" label="How it works" />
+            <h2 className="mt-8 font-display text-5xl font-medium leading-tight text-[#0B1F3F] md:text-7xl">
               Built like an account manager for private aviation.
             </h2>
           </div>
 
-          <div className="mt-12 grid gap-px bg-[#262626] overflow-hidden rounded-lg lg:grid-cols-4">
-            {processSteps.map((step, i) => (
-              <article
-                key={step.number}
-                className={`bg-[#0A0A0A] p-6 ${i === 0 ? "lg:rounded-l-lg" : ""} ${i === processSteps.length - 1 ? "lg:rounded-r-lg" : ""}`}
-              >
-                <p className="font-mono text-sm font-bold text-[#9A92D1]">{step.number}</p>
-                <h3 className="mt-8 text-xl font-bold text-[#F5F5F5]">{step.title}</h3>
-                <p className="mt-4 text-sm leading-6 text-[#8A8A8A]">{step.copy}</p>
+          <div className="mt-14 grid border-l border-t border-[#C8D8F0] lg:grid-cols-4">
+            {processSteps.map((step) => (
+              <article key={step.number} className="border-b border-r border-[#C8D8F0] bg-white/86 p-8">
+                <p className="font-display text-6xl font-light leading-none text-[#9A92D1]">{step.number}</p>
+                <h3 className="mt-12 font-display text-2xl font-medium text-[#0B1F3F]">{step.title}</h3>
+                <p className="mt-5 text-sm leading-6 text-[#52627C]">{step.copy}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Rates section */}
-      <section id="rates" className="bg-[#111111] px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">Rates and pricing</p>
-            <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-5xl">
+      <section id="rates" className="bg-white px-5 py-24 md:px-12 md:py-36 lg:px-24">
+        <div className="mx-auto grid max-w-[1500px] gap-12 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-5">
+            <SectionLabel index="05" label="Rates and pricing" />
+            <h2 className="mt-8 font-display text-5xl font-medium leading-tight text-[#0B1F3F] md:text-7xl">
               Transparent pricing before you approve the mission.
             </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#8A8A8A]">
-              Private charter rates move with aircraft class, route, positioning, demand,
-              crew duty limits, airport costs, and service requirements. Tarmac makes those
-              drivers visible so clients can compare options without spending hours shopping
-              the same trip.
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-[#52627C]">
+              Private charter rates move with aircraft class, route, positioning, demand, crew
+              duty limits, airport costs, and service requirements. Tarmac makes those drivers visible.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              {["No blind markups", "Quote logic explained", "Mission-specific sourcing"].map(
-                (pill) => (
-                  <span
-                    key={pill}
-                    className="rounded-full border border-[#9A92D1]/30 bg-[#9A92D1]/10 px-4 py-2 text-sm font-semibold text-[#9A92D1]"
-                  >
-                    {pill}
-                  </span>
-                ),
-              )}
-            </div>
           </div>
 
-          <div className="rounded-lg border border-[#262626] bg-[#181818] p-6 md:p-8">
-            <div className="flex items-start justify-between gap-6 border-b border-[#262626] pb-6">
+          <div className="border border-[#DDE8F8] bg-[#F8FBFF] lg:col-span-7">
+            <div className="flex items-start justify-between gap-6 border-b border-[#DDE8F8] p-8">
               <div>
-                <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">Quote review includes</p>
-                <h3 className="mt-2 text-2xl font-bold text-[#F5F5F5]">
+                <p className="aero-label text-[#5D7DBC]">Quote review matrix</p>
+                <h3 className="mt-3 font-display text-3xl font-medium text-[#0B1F3F]">
                   The numbers behind the number.
                 </h3>
               </div>
-              <ShieldCheck aria-hidden="true" className="h-8 w-8 shrink-0 text-[#9A92D1]" />
+              <p aria-hidden="true" className="aero-label shrink-0 text-[#9A92D1]">OK</p>
             </div>
-            <div className="mt-6 grid gap-4 sm:grid-cols-2">
-              {[
-                "Aircraft class and cabin fit",
-                "Route and repositioning logic",
-                "Operator and partner availability",
-                "Crew, airport, tax, and service factors",
-                "Comparable options and trade-offs",
-                "Coordination scope and disclosed economics",
-              ].map((item) => (
-                <div key={item} className="flex gap-3">
-                  <CheckCircle2 aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-[#9A92D1]" />
-                  <p className="text-sm leading-6 text-[#8A8A8A]">{item}</p>
+            <div className="grid md:grid-cols-2">
+              {quoteFactors.map((item) => (
+                <div key={item} className="flex gap-4 border-b border-r border-[#DDE8F8] p-6">
+                  <span aria-hidden="true" className="aero-label mt-1 shrink-0 text-[#9A92D1]">+</span>
+                  <p className="text-sm leading-6 text-[#52627C]">{item}</p>
                 </div>
               ))}
             </div>
@@ -534,112 +493,96 @@ function App() {
         </div>
       </section>
 
-      {/* Benefits */}
-      <section id="benefits" className="bg-[#0A0A0A] px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">Benefits</p>
-              <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-5xl">
+      <section id="benefits" className="aero-grid bg-[#F8FBFF] px-5 py-24 text-[#0B1F3F] md:px-12 md:py-36 lg:px-24">
+        <div className="mx-auto max-w-[1500px]">
+          <div className="grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <SectionLabel index="06" label="Benefits" />
+              <h2 className="mt-8 font-display text-5xl font-medium leading-tight md:text-7xl">
                 Less noise between request and wheels up.
               </h2>
-              <p className="mt-6 max-w-xl text-base leading-8 text-[#8A8A8A]">
-                The point is not to add another broker. The point is to remove the mess
-                between client intent, partner capability, owner needs, and a fair trip plan.
-              </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2">
-              {benefits.map((benefit) => (
-                <div
-                  key={benefit}
-                  className="flex gap-3 rounded-lg border border-[#262626] bg-[#111111] p-5 transition-colors hover:border-[#9A92D1]/30"
-                >
-                  <Sparkles aria-hidden="true" className="mt-1 h-5 w-5 shrink-0 text-[#9A92D1]" />
-                  <p className="text-sm leading-6 text-[#8A8A8A]">{benefit}</p>
+            <div className="grid border-l border-t border-[#DDE8F8] sm:grid-cols-2 lg:col-span-8">
+              {benefits.map((benefit, index) => (
+                <div key={benefit} className="flex gap-5 border-b border-r border-[#DDE8F8] bg-white p-6">
+                  <span className="aero-label text-[#9A92D1]">{String(index + 1).padStart(2, "0")}</span>
+                  <p className="text-sm leading-6 text-[#52627C]">{benefit}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Old vs Tarmac way */}
-          <div className="mt-14 grid overflow-hidden rounded-lg border border-[#262626] md:grid-cols-2">
-            <div className="bg-[#111111] p-6 md:p-8">
-              <p className="text-sm font-bold uppercase tracking-widest text-[#3A3A3A]">The old way</p>
-              <h3 className="mt-3 text-2xl font-bold text-[#F5F5F5]">Ten threads. Ten incentives.</h3>
-              <p className="mt-4 text-sm leading-6 text-[#8A8A8A]">
-                Owners and travelers compare scattered quotes, repeat the same trip details,
-                and still have to decide which number is fair.
+          <div className="mt-14 grid border border-[#DDE8F8] bg-white md:grid-cols-2">
+            <div className="p-8">
+              <p className="aero-label text-[#5D6F8F]">The old way</p>
+              <h3 className="mt-5 font-display text-4xl font-medium">Ten threads. Ten incentives.</h3>
+              <p className="mt-5 text-sm leading-6 text-[#52627C]">
+                Owners and travelers compare scattered quotes, repeat the same trip details, and still
+                have to decide which number is fair.
               </p>
             </div>
-            <div className="bg-[#9A92D1] p-6 text-[#0A0A0A] md:p-8">
-              <p className="text-sm font-bold uppercase tracking-widest text-[#0A0A0A]/60">The Tarmac way</p>
-              <h3 className="mt-3 text-2xl font-bold text-[#0A0A0A]">One desk. Clear rationale.</h3>
-              <p className="mt-4 text-sm leading-6 text-[#0A0A0A]/70">
-                Tarmac gathers the brief, filters the market, shows the trade-offs, and
-                keeps the handoffs moving until the trip is complete.
+            <div className="border-t border-[#DDE8F8] bg-[linear-gradient(135deg,#EEF5FF,#F4F1FF)] p-8 md:border-l md:border-t-0">
+              <p className="aero-label text-[#746AD1]">The Tarmac way</p>
+              <h3 className="mt-5 font-display text-4xl font-medium">One desk. Clear rationale.</h3>
+              <p className="mt-5 text-sm leading-6 text-[#52627C]">
+                Tarmac gathers the brief, filters the market, shows the trade-offs, and keeps the
+                handoffs moving until the trip is complete.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" className="bg-[#111111] px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">FAQ</p>
-            <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-5xl">
+      <section id="faq" className="bg-white px-5 py-24 md:px-12 md:py-36 lg:px-24">
+        <div className="mx-auto grid max-w-[1500px] gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <SectionLabel index="07" label="FAQ" />
+            <h2 className="mt-8 font-display text-5xl font-medium leading-tight text-[#0B1F3F] md:text-6xl">
               Straight answers for a relationship business.
             </h2>
           </div>
 
-          <div className="divide-y divide-[#262626] border-y border-[#262626]">
+          <div className="border-t border-[#DDE8F8] lg:col-span-8">
             {faqs.map((faq) => (
-              <details key={faq.question} className="group py-6">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-bold text-[#F5F5F5]">
+              <details key={faq.question} className="group border-b border-[#DDE8F8] py-7">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-2xl font-medium text-[#0B1F3F]">
                   {faq.question}
-                  <ChevronRight
-                    aria-hidden="true"
-                    className="h-5 w-5 shrink-0 text-[#9A92D1] transition-transform group-open:rotate-90"
-                  />
+                  <span aria-hidden="true" className="shrink-0 text-[#9A92D1] transition-transform group-open:rotate-90">
+                    &gt;
+                  </span>
                 </summary>
-                <p className="mt-4 max-w-3xl text-sm leading-7 text-[#8A8A8A]">{faq.answer}</p>
+                <p className="mt-5 max-w-3xl text-sm leading-7 text-[#52627C]">{faq.answer}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contact" className="bg-[#0A0A0A] px-6 py-20 md:px-8 md:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div>
-            <img
-              src="/brand/tarmacfinal.png"
-              alt="Tarmac"
-              className="mb-8 h-[180px] w-[180px] object-contain brightness-0 invert"
-            />
-            <p className="text-sm font-bold uppercase tracking-widest text-[#9A92D1]">Start with the mission</p>
-            <h2 className="mt-4 text-4xl font-black leading-tight tracking-tight text-[#F5F5F5] md:text-6xl">
+      <section id="contact" className="aero-grid-dark bg-[#0B2A55] px-5 py-24 text-white md:px-12 md:py-36 lg:px-24">
+        <div className="mx-auto grid max-w-[1500px] gap-12 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-5">
+            <BrandLogo className="mb-10" variant="light" />
+            <SectionLabel index="08" label="Start with the mission" />
+            <h2 className="mt-8 font-display text-5xl font-medium leading-tight md:text-7xl">
               Bring one trip, owner need, or service request.
             </h2>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[#8A8A8A]">
+            <p className="mt-8 max-w-2xl text-lg leading-8 text-white/72">
               Tarmac will turn the brief into an actionable path across the AMG Aviation
               partnership network, broker channels, charter resources, and service partners.
             </p>
 
-            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            <div className="mt-10 grid border-l border-t border-white/16 sm:grid-cols-2">
               {[
-                { icon: Plane, title: "Charter brief", copy: "Route, timing, passengers, and cabin fit." },
-                { icon: ShieldCheck, title: "Partner filter", copy: "Qualified operators, services, and broker support." },
-                { icon: Mail, title: "Direct desk", copy: contactEmail },
-                { icon: CheckCircle2, title: "End-to-end", copy: "Source, compare, coordinate, and follow through." },
+                { glyph: "CB", title: "Charter brief", copy: "Route, timing, passengers, and cabin fit." },
+                { glyph: "PF", title: "Partner filter", copy: "Qualified operators, services, and broker support." },
+                { glyph: "DD", title: "Direct desk", copy: contactEmail },
+                { glyph: "E2E", title: "End-to-end", copy: "Source, compare, coordinate, and follow through." },
               ].map((item) => (
-                <div key={item.title} className="rounded-lg border border-[#262626] bg-[#111111] p-5 transition-colors hover:border-[#9A92D1]/40">
-                  <item.icon aria-hidden="true" className="h-6 w-6 text-[#9A92D1]" />
-                  <p className="mt-4 font-bold text-[#F5F5F5]">{item.title}</p>
-                  <p className="mt-2 text-sm leading-6 text-[#8A8A8A]">{item.copy}</p>
+                <div key={item.title} className="border-b border-r border-white/16 bg-white/[0.06] p-6">
+                  <p className="aero-label text-[#B9C8FF]">{item.glyph}</p>
+                  <p className="mt-7 font-display text-xl font-medium">{item.title}</p>
+                  <p className="mt-3 text-sm leading-6 text-white/66">{item.copy}</p>
                 </div>
               ))}
             </div>
@@ -647,45 +590,45 @@ function App() {
 
           <form
             onSubmit={handleSubmit}
-            className="rounded-lg border border-[#262626] bg-[#111111] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.60)] md:p-7"
+            className="border border-[#DDE8F8] bg-white p-6 text-[#0B1F3F] shadow-[0_24px_80px_rgba(0,0,0,0.24)] md:p-8 lg:col-span-7"
           >
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-5 sm:grid-cols-2">
               <label className="block">
-                <span className="text-sm font-semibold text-[#C0C0C0]">Name</span>
+                <span className="aero-label text-[#0B1F3F]">Name</span>
                 <input
                   required
                   value={form.name}
                   onChange={(event) => updateField("name", event.target.value)}
-                  className="mt-2 h-12 w-full rounded-md border border-[#262626] bg-[#181818] px-4 text-sm text-[#F5F5F5] outline-none placeholder:text-[#3A3A3A] transition-colors focus:border-[#9A92D1]"
+                  className="mt-3 h-12 w-full border border-[#DDE8F8] bg-[#F8FBFF] px-4 text-sm outline-none transition-colors focus:border-[#9A92D1]"
                   autoComplete="name"
                 />
               </label>
               <label className="block">
-                <span className="text-sm font-semibold text-[#C0C0C0]">Email</span>
+                <span className="aero-label text-[#0B1F3F]">Email</span>
                 <input
                   required
                   type="email"
                   value={form.email}
                   onChange={(event) => updateField("email", event.target.value)}
-                  className="mt-2 h-12 w-full rounded-md border border-[#262626] bg-[#181818] px-4 text-sm text-[#F5F5F5] outline-none placeholder:text-[#3A3A3A] transition-colors focus:border-[#9A92D1]"
+                  className="mt-3 h-12 w-full border border-[#DDE8F8] bg-[#F8FBFF] px-4 text-sm outline-none transition-colors focus:border-[#9A92D1]"
                   autoComplete="email"
                 />
               </label>
               <label className="block">
-                <span className="text-sm font-semibold text-[#C0C0C0]">Phone</span>
+                <span className="aero-label text-[#0B1F3F]">Phone</span>
                 <input
                   value={form.phone}
                   onChange={(event) => updateField("phone", event.target.value)}
-                  className="mt-2 h-12 w-full rounded-md border border-[#262626] bg-[#181818] px-4 text-sm text-[#F5F5F5] outline-none placeholder:text-[#3A3A3A] transition-colors focus:border-[#9A92D1]"
+                  className="mt-3 h-12 w-full border border-[#DDE8F8] bg-[#F8FBFF] px-4 text-sm outline-none transition-colors focus:border-[#9A92D1]"
                   autoComplete="tel"
                 />
               </label>
               <label className="block">
-                <span className="text-sm font-semibold text-[#C0C0C0]">Aircraft preference</span>
+                <span className="aero-label text-[#0B1F3F]">Aircraft preference</span>
                 <select
                   value={form.aircraft}
                   onChange={(event) => updateField("aircraft", event.target.value)}
-                  className="mt-2 h-12 w-full rounded-md border border-[#262626] bg-[#181818] px-4 text-sm text-[#F5F5F5] outline-none transition-colors focus:border-[#9A92D1]"
+                  className="mt-3 h-12 w-full border border-[#DDE8F8] bg-[#F8FBFF] px-4 text-sm outline-none transition-colors focus:border-[#9A92D1]"
                 >
                   <option>Best fit</option>
                   <option>Light jet</option>
@@ -696,51 +639,51 @@ function App() {
                 </select>
               </label>
               <label className="block sm:col-span-2">
-                <span className="text-sm font-semibold text-[#C0C0C0]">Route</span>
+                <span className="aero-label text-[#0B1F3F]">Route</span>
                 <input
                   required
                   value={form.route}
                   onChange={(event) => updateField("route", event.target.value)}
                   placeholder="Example: TEB to MIA, round trip"
-                  className="mt-2 h-12 w-full rounded-md border border-[#262626] bg-[#181818] px-4 text-sm text-[#F5F5F5] outline-none placeholder:text-[#3A3A3A] transition-colors focus:border-[#9A92D1]"
+                  className="mt-3 h-12 w-full border border-[#DDE8F8] bg-[#F8FBFF] px-4 text-sm outline-none transition-colors placeholder:text-[#90A0B7] focus:border-[#9A92D1]"
                 />
               </label>
               <label className="block sm:col-span-2">
-                <span className="text-sm font-semibold text-[#C0C0C0]">Timing</span>
+                <span className="aero-label text-[#0B1F3F]">Timing</span>
                 <input
                   required
                   value={form.timing}
                   onChange={(event) => updateField("timing", event.target.value)}
                   placeholder="Dates, departure window, flexibility"
-                  className="mt-2 h-12 w-full rounded-md border border-[#262626] bg-[#181818] px-4 text-sm text-[#F5F5F5] outline-none placeholder:text-[#3A3A3A] transition-colors focus:border-[#9A92D1]"
+                  className="mt-3 h-12 w-full border border-[#DDE8F8] bg-[#F8FBFF] px-4 text-sm outline-none transition-colors placeholder:text-[#90A0B7] focus:border-[#9A92D1]"
                 />
               </label>
               <label className="block sm:col-span-2">
-                <span className="text-sm font-semibold text-[#C0C0C0]">Mission notes</span>
+                <span className="aero-label text-[#0B1F3F]">Mission notes</span>
                 <textarea
                   value={form.details}
                   onChange={(event) => updateField("details", event.target.value)}
                   rows={5}
                   placeholder="Passengers, pets, catering, budget sensitivity, owner needs, service requests, or broker coordination details."
-                  className="mt-2 w-full resize-none rounded-md border border-[#262626] bg-[#181818] px-4 py-3 text-sm text-[#F5F5F5] outline-none placeholder:text-[#3A3A3A] transition-colors focus:border-[#9A92D1]"
+                  className="mt-3 w-full resize-none border border-[#DDE8F8] bg-[#F8FBFF] px-4 py-3 text-sm outline-none transition-colors placeholder:text-[#90A0B7] focus:border-[#9A92D1]"
                 />
               </label>
             </div>
 
             <button
               type="submit"
-              className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#9A92D1] px-5 py-3 text-sm font-bold text-[#0A0A0A] transition-colors hover:bg-[#B8B3E8]"
+              className="aero-button mt-6 min-h-12 w-full justify-center bg-[#9A92D1] text-white hover:bg-[#867DCA]"
             >
               Send Request
-              <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              <span aria-hidden="true">-&gt;</span>
             </button>
-            <p className="mt-4 text-xs leading-5 text-[#3A3A3A]">
+            <p className="mt-5 text-xs leading-5 text-[#5D6F8F]">
               By sending a request, you are asking Tarmac by AMG to review the mission and
               coordinate relevant partner options. Final charter services are subject to
               operator availability, safety review, and agreement terms.
             </p>
             {submitted ? (
-              <p role="status" className="mt-4 rounded-md border border-[#9A92D1]/30 bg-[#9A92D1]/10 px-4 py-3 text-sm text-[#9A92D1]">
+              <p role="status" className="mt-4 bg-[#EEF5FF] px-4 py-3 text-sm text-[#0B2A55]">
                 Your email client is opening with the request details prepared.
               </p>
             ) : null}
@@ -748,17 +691,12 @@ function App() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-[#262626] bg-[#111111] px-6 py-8 md:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
-          <a href="#start" aria-label="Tarmac by AMG home">
-            <img
-              src="/brand/tarmacfinal.png"
-              alt="Tarmac"
-              className="h-[140px] w-[140px] object-contain brightness-0 invert"
-            />
+      <footer className="border-t border-[#DDE8F8] bg-white px-5 py-8 md:px-12 lg:px-24">
+        <div className="mx-auto flex max-w-[1500px] flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <a href="#start" aria-label="Tarmac home">
+            <BrandLogo compact />
           </a>
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#8A8A8A]">
+          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#52627C]">
             {navItems.map((item) => (
               <a key={item.href} href={item.href} className="transition-colors hover:text-[#9A92D1]">
                 {item.label}

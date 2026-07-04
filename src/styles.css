@@ -1,27 +1,19 @@
-@import "tailwindcss" source(none);
-
-@source "../index.html";
-@source "./App.tsx";
-@source "./main.tsx";
-
-@theme inline {
-  --color-tarmac-black: #0A0A0A;
-  --color-tarmac-dark: #111111;
-  --color-tarmac-surface: #181818;
-  --color-tarmac-border: #262626;
-  --color-tarmac-muted: #3A3A3A;
-  --color-tarmac-purple: #9A92D1;
-  --color-tarmac-purple-light: #B8B3E8;
-  --color-tarmac-purple-deep: #6B64B8;
-  --color-tarmac-white: #F5F5F5;
-  --color-tarmac-gray: #8A8A8A;
-  --color-tarmac-gray-light: #C0C0C0;
-}
-
 :root {
-  color: #F5F5F5;
-  background: #0A0A0A;
+  color: #0b1f3f;
+  background: #ffffff;
+  --tarmac-white: #ffffff;
+  --tarmac-ink: #0b1f3f;
+  --tarmac-navy: #0b2a55;
+  --tarmac-blue: #5d7dbc;
+  --tarmac-purple: #9a92d1;
+  --tarmac-slate: #52627c;
+  --tarmac-muted: #64748b;
+  --tarmac-line: #dde8f8;
+  --tarmac-line-strong: #c8d8f0;
+  --tarmac-soft: #f8fbff;
+  --tarmac-bluewash: #eef5ff;
   font-family:
+    "Plus Jakarta Sans",
     "Inter",
     system-ui,
     -apple-system,
@@ -40,7 +32,6 @@
 
 html {
   scroll-behavior: smooth;
-  background: #0A0A0A;
 }
 
 body {
@@ -56,13 +47,95 @@ textarea {
   font: inherit;
 }
 
+img {
+  max-width: 100%;
+}
+
 summary::-webkit-details-marker {
   display: none;
 }
 
 ::selection {
-  background: #9A92D1;
-  color: #0A0A0A;
+  background: #d9d5ff;
+  color: #0b1f3f;
+}
+
+.font-display {
+  font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+}
+
+.font-body {
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+}
+
+.aero-label {
+  font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.aero-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 0;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  transition:
+    background-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aero-button:hover {
+  transform: translateY(-1px);
+}
+
+.aero-grid {
+  position: relative;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(93, 125, 188, 0.12) 0 1px,
+      transparent 1px calc(100% / 12)
+    );
+}
+
+.aero-grid-dark {
+  position: relative;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      rgba(221, 232, 248, 0.1) 0 1px,
+      transparent 1px calc(100% / 12)
+    );
+}
+
+.aero-grid > *,
+.aero-grid-dark > * {
+  position: relative;
+}
+
+input,
+select,
+textarea {
+  border-radius: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--tarmac-purple);
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
