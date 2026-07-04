@@ -144,9 +144,11 @@ function BrandLogo({
 
   return (
     <img
-      src={isLight ? "/brand/tarmac-by-amg-logo-light.svg" : "/brand/tarmac-by-amg-logo.svg"}
-      alt="Tarmac by AMG Aviation"
-      className={`${compact ? "h-12 w-auto" : "h-16 w-auto"} ${className}`}
+      src="/brand/tarmacfinal.png"
+      alt="Tarmac"
+      className={`${compact ? "h-16 w-16" : "h-20 w-20"} object-contain ${
+        isLight ? "drop-shadow-[0_18px_36px_rgba(255,255,255,0.14)]" : "brightness-0"
+      } ${className}`}
     />
   );
 }
